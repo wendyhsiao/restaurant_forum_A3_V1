@@ -13,7 +13,10 @@ const passport = require('./config/passport')
 const db = require('./models') // 引入資料庫
 
 
-app.engine('handlebars', handlebars({ defaultLayout: 'main' })) // Handlebars 註冊樣板引擎
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',  // Handlebars 註冊樣板引擎
+  helpers: require('./config/handlebars-helpers')
+}))
 app.set('view engine', 'handlebars') // 設定使用 Handlebars 做為樣板引擎
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'your secrete key', resave: false, saveUninitialized: false }))
