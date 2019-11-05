@@ -10,6 +10,12 @@ const restController = {
       }))
       return res.render('restaurants', { restaurants: data })
     })
+  },
+  getRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.body.id, { include: Category })
+      .then(restaurant => {
+        return res.render('restaurant', { restaurant: restaurant })
+      })
   }
 }
 
