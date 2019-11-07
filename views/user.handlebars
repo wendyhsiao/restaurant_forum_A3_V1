@@ -1,0 +1,17 @@
+<div class="row bg-white" style="border: 1px solid #d6d6d6;">
+  <div class="col-4">
+    <img class="img-responsive center-block" src="{{user.image}}" style="width: 250px;min-height:150px;margin: 25px;">
+  </div>
+
+  <div class="col-8">
+    <h1>{{user.name}}</h1>
+    <p>{{user.email}}</p>
+
+    {{#ifCond user.id check}}
+    <div>
+      <a href="/users/{{user.id}}/edit" class="btn btn-primary">edit</a>
+    </div>
+    {{/ifCond}}
+  </div>
+
+</div>
