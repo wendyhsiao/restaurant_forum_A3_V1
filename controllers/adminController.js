@@ -134,16 +134,9 @@ const adminController = {
   putUsers: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
-        console.log('user.isAdmin', user.isAdmin)
-        if (user.isAdmin) {
-          user.update({
-            isAdmin: false
-          })
-        } else {
-          user.update({
-            isAdmin: true
-          })
-        }
+        user.update({
+          isAdmin: !user.isAdmin
+        })
       }).then(user => {
         req.flash('success_messages', '使用者權限更新成功')
         res.redirect('/admin/users')

@@ -7,20 +7,8 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
+  const { authenticated, authenticatedAdmin } = require('../middlewares/authenticate.js')
 
-  const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      return next()
-    }
-    res.redirect('/signin')
-  }
-  const authenticatedAdmin = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      if (req.user.isAdmin) { return next() }
-      return res.redirect('/')
-    }
-    res.redirect('/signin')
-  }
 
   app.get('/', authenticated, (req, res) => res.redirect('/restaurants'))
   app.get('/restaurants', authenticated, restController.getRestaurants)
