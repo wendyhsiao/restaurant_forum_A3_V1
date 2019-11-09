@@ -12,7 +12,7 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const db = require('./models') // 引入資料庫
 
-
+app.use(express.static('public'))
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',  // Handlebars 註冊樣板引擎
   helpers: require('./config/handlebars-helpers')

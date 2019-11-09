@@ -1,7 +1,9 @@
+const fs = require('fs')
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
-const fs = require('fs')
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -44,9 +46,14 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      res.render('user', { user: user, check: req.user.id })
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Comment, include: [Restaurant] }
+      ]
     })
+      .then(user => {
+        res.render('user', { user: user, check: req.user.id })
+      })
   },
   editUser: (req, res) => {
     return User.findByPk(req.params.id).then(user => {

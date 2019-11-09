@@ -6,6 +6,7 @@
   <div class="col-8">
     <h1>{{user.name}}</h1>
     <p>{{user.email}}</p>
+    <p>已評論{{user.Comments.length}}間餐廳</p>
 
     {{#ifCond user.id check}}
     <div>
@@ -13,5 +14,22 @@
     </div>
     {{/ifCond}}
   </div>
+</div>
 
+</br>
+
+<div class="row">
+  <div class="card user-card col-12" style="width: 18rem;">
+    <div class="card-header">
+      <h5>已評論{{user.Comments.length}}間餐廳</h5>
+    </div>
+
+    <div class="d-flex flex-row">
+      {{#each user.Comments}}
+      <a href="/restaurants/{{this.Restaurant.id}}" class="rest-img ml-3 my-3">
+        <div style="background-image: url({{this.Restaurant.image}});"></div>
+      </a>
+      {{/each}}
+    </div>
+  </div>
 </div>
