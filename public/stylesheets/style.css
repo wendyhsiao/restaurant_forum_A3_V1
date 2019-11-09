@@ -1,3 +1,6 @@
+.hr-top{
+    border-top: 1px solid #dcdcdc;
+}
 .rest-img{
   width:100px;
   height:0px;
@@ -14,3 +17,4 @@
 .user-card{
   padding: 0px;
 }
+

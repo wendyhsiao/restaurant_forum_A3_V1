@@ -55,6 +55,14 @@ const restController = {
         return res.render('restaurant', { restaurant: restaurant })
       })
   },
+  getDashboard: (req, res) => {
+    return Restaurant.findByPk(req.params.id, {
+      include: [Category, { model: Comment, include: [User] }]
+    })
+      .then(restaurant => {
+        return res.render('dashboard', { restaurant: restaurant })
+      })
+  },
   getFeeds: (req, res) => {
     return Restaurant.findAll({
       limit: 10,
