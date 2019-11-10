@@ -97,7 +97,6 @@ const restController = {
   },
   getTopRestaurant: (req, res) => {
     return Restaurant.findAll({
-      limit: 10,
       include: [{ model: User, as: 'FavoritedUsers' }],
     }).then(restaurants => {
       restaurants = restaurants.map(restaurant => ({
@@ -108,7 +107,8 @@ const restController = {
       }))
 
       restaurants = restaurants.sort((a, b) => b.favoriteCount - a.favoriteCount)
-      return res.render('topRestaurant', { restaurants: restaurants })
+      const topRestaurant = restaurants.slice(0, 10)  // 選擇前10
+      return res.render('topRestaurant', { topRestaurant: topRestaurant })
 
     })
   }
