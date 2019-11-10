@@ -72,45 +72,27 @@ const userController = {
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID);
       imgur.upload(file.path, (err, img) => {
-        User.findOne({ where: { email: req.body.email } }).then(email => {
-          if (email) {
-            req.flash('error_messages', '信箱重複，請使用其他信箱!')
-            return res.redirect(`/users/${req.user.id}/edit`)
-          } else {
-            return User.findByPk(req.params.id).then(user => {
-              user.update({
-                name: req.body.name,
-                email: req.body.email,
-                image: file ? img.data.link : user.image
-              }).then(user => {
-                req.flash('success_messages', '已更新個人資訊')
-                return res.redirect(`/users/${req.params.id}`)
-              })
-            })
-          }
+        return User.findByPk(req.params.id).then(user => {
+          user.update({
+            name: req.body.name,
+            image: file ? img.data.link : user.image
+          }).then(user => {
+            req.flash('success_messages', '已更新個人資訊')
+            return res.redirect(`/users/${req.params.id}`)
+          })
         })
-
       })
     }
     else {
-      User.findOne({ where: { email: req.body.email } }).then(email => {
-        if (email) {
-          req.flash('error_messages', '信箱重複!')
-          return res.redirect(`/users/${req.user.id}/edit`)
-        } else {
-          return User.findByPk(req.params.id).then(user => {
-            user.update({
-              name: req.body.name,
-              email: req.body.email,
-              image: user.image
-            }).then(user => {
-              req.flash('success_messages', '已更新個人資訊')
-              return res.redirect(`/users/${req.params.id}`)
-            })
-          })
-        }
+      return User.findByPk(req.params.id).then(user => {
+        user.update({
+          name: req.body.name,
+          image: user.image
+        }).then(user => {
+          req.flash('success_messages', '已更新個人資訊')
+          return res.redirect(`/users/${req.params.id}`)
+        })
       })
-
     }
   },
   addFavorite: (req, res) => {
