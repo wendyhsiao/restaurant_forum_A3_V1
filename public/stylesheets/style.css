@@ -1,5 +1,13 @@
+.favorite-count{
+  background-color: #9f9f9f;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 5px;
+  font-weight: bold;
+  padding:3px;
+}
 .hr-top{
-    border-top: 1px solid #dcdcdc;
+  border-top: 1px solid #dcdcdc;
 }
 .rest-img{
   width:100px;

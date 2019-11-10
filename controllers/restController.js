@@ -94,6 +94,23 @@ const restController = {
       })
 
     })
+  },
+  getTopRestaurant: (req, res) => {
+    return Restaurant.findAll({
+      limit: 10,
+      include: [{ model: User, as: 'FavoritedUsers' }],
+    }).then(restaurants => {
+      restaurants = restaurants.map(restaurant => ({
+        ...restaurant.dataValues,
+        description: restaurant.dataValues.description.substring(0, 50),
+        favoriteCount: restaurant.FavoritedUsers.length,
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id)
+      }))
+
+      restaurants = restaurants.sort((a, b) => b.favoriteCount - a.favoriteCount)
+      return res.render('topRestaurant', { restaurants: restaurants })
+
+    })
   }
 }
 
