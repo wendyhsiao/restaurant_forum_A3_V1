@@ -36,7 +36,8 @@ const adminController = {
           opening_hours: req.body.opening_hours,
           description: req.body.description,
           image: file ? img.data.link : null,
-          CategoryId: req.body.categoryId
+          CategoryId: req.body.categoryId,
+          viewCounts: 0
         }).then(restaurant => {
           req.flash('success_messages', '已成功建立餐廳')
           res.redirect('/admin/restaurants')
@@ -50,7 +51,8 @@ const adminController = {
         opening_hours: req.body.opening_hours,
         description: req.body.description,
         image: null,
-        CategoryId: req.body.categoryId
+        CategoryId: req.body.categoryId,
+        viewCounts: 0
       }).then(restaurant => {
         req.flash('success_messages', '已成功建立餐廳')
         res.redirect('/admin/restaurants')
@@ -114,12 +116,19 @@ const adminController = {
     }
   },
   deleteRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id).then(restaurant => {
-      restaurant.destroy()
-        .then(restaurant => {
-          res.redirect('/admin/restaurants')
-        })
+    adminService.deleteRestaurant(req, res, data => {
+      console.log('data', data)
+      if (data['status'] === 'success') {
+        return res.redirect('/admin/restaurants')
+      }
     })
+
+    // return Restaurant.findByPk(req.params.id).then(restaurant => {
+    //   restaurant.destroy()
+    //     .then(restaurant => {
+    //       res.redirect('/admin/restaurants')
+    //     })
+    // })
   },
   editUsers: (req, res) => {
     return User.findAll().then(users => {
