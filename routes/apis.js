@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 const adminController = require('../controllers/api/adminController.js')
-const categoryController = require('../controllers/api/categoryController.js')
 const userController = require('../controllers/api/userController.js')
+const categoryController = require('../controllers/api/categoryController.js')
+const commentController = require('../controllers/commentController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -11,6 +12,9 @@ const upload = multer({ dest: 'temp/' })
 const authenticated = passport.authenticate('jwt', { session: false })
 const { authenticatedAdmin } = require('../middlewares/api/authenticate.js')
 
+
+router.post('/comments', authenticated, commentController.postComment)
+router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
 router.get('/users/top', authenticated, userController.getTopUser)
 router.get('/users/:id', authenticated, userController.getUser)
