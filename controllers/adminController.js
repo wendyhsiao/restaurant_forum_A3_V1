@@ -65,27 +65,15 @@ const adminController = {
     // })
   },
   editUsers: (req, res) => {
-    return User.findAll().then(users => {
-      const obj = {
-        true: 'admin',
-        false: 'user'
-      }
-      users.forEach(user => {
-        user.role = obj[user.isAdmin]
-      });
-      return res.render('admin/users', { users: users })
+    adminService.editUsers(req, res, data => {
+      return res.render('admin/users', data)
     })
   },
   putUsers: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then(user => {
-        user.update({
-          isAdmin: !user.isAdmin
-        })
-      }).then(user => {
-        req.flash('success_messages', '使用者權限更新成功')
-        res.redirect('/admin/users')
-      })
+    adminService.putUsers(req, res, data => {
+      req.flash('success_messages', data['message'])
+      res.redirect('/admin/users')
+    })
   }
 }
 

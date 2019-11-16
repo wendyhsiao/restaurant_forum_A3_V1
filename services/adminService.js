@@ -122,5 +122,27 @@ const adminService = {
           })
       })
   },
+  editUsers: (req, res, callback) => {
+    return User.findAll().then(users => {
+      const obj = {
+        true: 'admin',
+        false: 'user'
+      }
+      users.forEach(user => {
+        user.role = obj[user.isAdmin]
+      });
+      callback({ users: users })
+    })
+  },
+  putUsers: (req, res, callback) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        user.update({
+          isAdmin: !user.isAdmin
+        })
+      }).then(user => {
+        callback({ status: 'success', message: '使用者權限更新成功' })
+      })
+  }
 }
 module.exports = adminService
