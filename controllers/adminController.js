@@ -15,8 +15,8 @@ const adminController = {
     })
   },
   createRestaurant: (req, res) => {
-    Category.findAll().then(categories => {
-      return res.render('admin/create', { categories: categories })
+    adminService.createRestaurant(req, res, (data) => {
+      return res.render('admin/create', data)
     })
   },
   postRestaurant: (req, res) => {
@@ -35,10 +35,8 @@ const adminController = {
     })
   },
   editRestaurant: (req, res) => {
-    return Restaurant.findByPk(req.params.id).then(restaurant => {
-      Category.findAll().then(categories => {
-        return res.render('admin/create', { restaurant: restaurant, categories: categories })
-      })
+    adminService.editRestaurant(req, res, data => {
+      return res.render('admin/create', data)
     })
   },
   putRestaurant: (req, res) => {
@@ -48,7 +46,7 @@ const adminController = {
         return res.redirect('back')
       }
       req.flash('success_messages', data['message'])
-      res.redirect('/admin/restaurant')
+      res.redirect('/admin/restaurants')
     })
   },
   deleteRestaurant: (req, res) => {

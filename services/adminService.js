@@ -13,11 +13,23 @@ const adminService = {
         callback({ restaurants: restaurants })
       })
   },
+  createRestaurant: (req, res, callback) => {
+    Category.findAll().then(categories => {
+      callback({ categories: categories })
+    })
+  },
   getRestaurant: (req, res, callback) => {
     return Restaurant.findByPk(req.params.id, { include: [Category] })
       .then(restaurant => {
         callback({ restaurant: restaurant })
       })
+  },
+  editRestaurant: (req, res, callback) => {
+    return Restaurant.findByPk(req.params.id).then(restaurant => {
+      Category.findAll().then(categories => {
+        callback({ restaurant: restaurant, categories: categories })
+      })
+    })
   },
   postRestaurant: (req, res, callback) => {
     if (!req.body.name) {

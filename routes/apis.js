@@ -12,8 +12,10 @@ const authenticated = passport.authenticate('jwt', { session: false })
 const { authenticatedAdmin } = require('../middlewares/api/authenticate.js')
 
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
-router.get('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
+router.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
+router.get('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
+router.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
 router.put('/admin/restaurants/:id', authenticated, authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
 router.delete('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.deleteRestaurant)
 
