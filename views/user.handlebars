@@ -19,17 +19,71 @@
 </br>
 
 <div class="row">
-  <div class="card user-card col-12" style="width: 18rem;">
-    <div class="card-header">
-      <h5>已評論{{user.Comments.length}}間餐廳</h5>
-    </div>
+  <div class="col-6">
+    <div class="card user-card">
+      <div class="card-header">
+        <h5>{{user.Followings.length}} followings (追蹤中)</h5>
+      </div>
 
-    <div class="d-flex flex-row">
-      {{#each user.Comments}}
-      <a href="/restaurants/{{this.Restaurant.id}}" class="rest-img ml-3 my-3">
-        <div style="background-image: url({{this.Restaurant.image}});"></div>
-      </a>
-      {{/each}}
+      <div class="d-flex flex-row">
+        {{#each user.Followings}}
+        <a href="/users/{{this.id}}" class="rest-img ml-3 my-3">
+          <div style="background-image: url({{this.image}});"></div>
+        </a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card user-card">
+      <div class="card-header">
+        <h5>已評論{{user.Comments.length}}間餐廳</h5>
+      </div>
+
+      <div class="d-flex flex-row">
+        {{#each user.Comments}}
+        <a href="/restaurants/{{this.Restaurant.id}}" class="rest-img ml-3 my-3">
+          <div style="background-image: url({{this.Restaurant.image}});"></div>
+        </a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+
+</br>
+
+<div class="row">
+  <div class="col-6">
+    <div class="card user-card">
+      <div class="card-header">
+        <h5>{{user.Followers.length}} follower (粉絲人數)</h5>
+      </div>
+
+      <div class="d-flex flex-row">
+        {{#each user.Followers}}
+        <a href="/users/{{this.id}}" class="rest-img ml-3 my-3">
+          <div style="background-image: url({{this.image}});"></div>
+        </a>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card user-card">
+      <div class="card-header">
+        <h5>已收藏的{{user.FavoritedRestaurants.length}}間餐廳</h5>
+      </div>
+
+      <div class="d-flex flex-row">
+        {{#each user.FavoritedRestaurants}}
+        <a href="/restaurants/{{this.id}}" class="rest-img ml-3 my-3">
+          <div style="background-image: url({{this.image}});"></div>
+        </a>
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>
